@@ -1,22 +1,26 @@
 package edu.knoldus
 
-import java.io.File
-
-import scala.io.StdIn._
-
+import edu.knoldus.Constant.Const
 import org.apache.log4j.Logger
+
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.io.StdIn._
+import scala.util.{Failure, Success}
 
 object Application extends App {
 
   val Printer = Logger.getLogger(this.getClass)
 
-  try {
-    Printer.info(" enter folder path  ")
-    val folderPath = readLine()
-    val filePath = new FilePath().getFilePath(new File(folderPath).listFiles().toList)
-    Printer.info(filePath)
+  Printer.info(" Enter folder path  ")
+  val folderPath = readLine()
+  val filePath = new FilePath().getFilePath(folderPath)
+
+  filePath onComplete {
+    case Success(path) => Printer.info(path)
+    case Failure(exception) => Printer.info(exception)
   }
-  catch {
-    case ex => Printer.info(ex)
-  }
+
+  Thread.sleep(Const.thousand)
+
+
 }

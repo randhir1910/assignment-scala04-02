@@ -1,0 +1,5 @@
+[0m[[0m[33mwarn[0m] [0m[0m/home/knoldus/IdeaProjects/assignment-scala04-02/src/main/scala/edu/knoldus/Application.scala:23:25: match may not be exhaustive.[0m
+[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following input: Failure(_)[0m
+[0m[[0m[33mwarn[0m] [0m[0m    filePath onComplete {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                        ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m

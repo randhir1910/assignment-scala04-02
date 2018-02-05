@@ -1,19 +1,25 @@
 package edu.knoldus
 
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
 import java.io.File
+
+import scala.annotation.tailrec
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class FilePath {
 
-  def getFilePath(file: List[File], filePaths: List[File] = Nil): Future[List[File]] = {
+  def getFilePath(file: String): Future[List[File]] = Future {
 
-    file match {
-      case Nil => Future { filePaths }
-      case first :: remain if first.isDirectory => getFilePath(remain ++ first.listFiles().toList, filePaths)
-      case first :: remain if first.isFile => getFilePath(remain, filePaths :+ first)
-      case _ => Future {  Nil }
+    @tailrec
+    def getPath(file: List[File], filePaths: List[File] = Nil): List[File] = {
+      file match {
+        case Nil => filePaths
+        case first :: remain if first.isDirectory => getPath(remain ++ first.listFiles().toList, filePaths)
+        case first :: remain if first.isFile => getPath(remain, filePaths :+ first)
+      }
     }
+
+    getPath(List(new File(file)))
 
   }
 }
